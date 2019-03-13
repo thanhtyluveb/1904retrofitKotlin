@@ -23,12 +23,12 @@ import retrofit2.Call
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-    lateinit var weatherViewModel: WeatherViewModel
+     lateinit var weatherViewModel: WeatherViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         weatherViewModel = ViewModelProviders.of(this@MainActivity).get(WeatherViewModel::class.java)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.viewmodel = WeatherViewModel()
+        binding.viewmodel = WeatherViewModel(application)
         binding.lifecycleOwner = this
     }
 }
