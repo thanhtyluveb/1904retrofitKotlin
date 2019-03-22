@@ -1,7 +1,6 @@
 package com.example.a113retrofitkotlin.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -15,46 +14,37 @@ import com.example.recyclerview.remote.retrofit.WeatherService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.logging.Handler
 
-class WeatherViewModel(application: Application) : AndroidViewModel(application) {
-
+open class WeatherViewModel(application: Application) : AndroidViewModel(application) {
     var livedataweather: MutableLiveData<WeatherModel> = MutableLiveData()
     var dataweather: LiveData<WeatherModel>
-    private var weatherService: WeatherService? = null
+    var weatherService: WeatherService
     var reposity: WeatherRepository
 
+
+    //    constructor(application: Application) : super(application) {
+//        reposity = WeatherRepository(application)
+//        dataweather = reposity.data
+//        weatherService = ApiUtils.soService
+//        loaddata()
+//    }
     init {
         reposity = WeatherRepository(application)
-        livedataweather.value = WeatherModel("name1", 0.0, 0, 0, 0, 0.0, 0)
         dataweather = reposity.data
         weatherService = ApiUtils.soService
         loaddata()
 
     }
 
-
     fun loaddata() {
-
         weatherService!!.weatherCall().enqueue(object : Callback<WeatherDigital> {
-            override fun onFailure(call: Call<WeatherDigital>, t: Throwable) {
-                Log.d("AAAA", "fail")
-
-                dataweather.observeForever(Observer {
-                    livedataweather.value = dataweather.value
-                    Toast.makeText(getApplication(), "dsds", Toast.LENGTH_LONG).show()
-                })
-
-
-            }
-
             override fun onResponse(call: Call<WeatherDigital>, response: Response<WeatherDigital>) {
                 if (response.isSuccessful) {
-                    Log.d("AAAA", "ok")
                     var apiresults: WeatherDigital = response.body()!!
-
                     var weathermodelresult = WeatherModel(
                         apiresults.name!!,
-                        apiresults.main!!.temp!!,
+                        Math.round(apiresults.main!!.temp!! - 275.0).toDouble(),
                         apiresults.main!!.pressure!!,
                         apiresults.main!!.humidity!!,
                         apiresults.clouds!!.all!!,
@@ -64,7 +54,22 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 
                     livedataweather.value = weathermodelresult
                     reposity.insert(weathermodelresult)
+                    Toast.makeText(getApplication(), "online mode", Toast.LENGTH_LONG).show()
+
                 }
+            }
+
+            override fun onFailure(call: Call<WeatherDigital>, t: Throwable) {
+                dataweather.observeForever(
+                    Observer {
+                        livedataweather.value = dataweather.value
+                        Toast.makeText(getApplication(), "offline mode", Toast.LENGTH_LONG).show()
+//                        dataweather.removeObserver { livedataweather }
+
+                    })
+
+
+
             }
 
         })

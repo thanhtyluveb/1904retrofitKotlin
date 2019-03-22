@@ -36,7 +36,7 @@ class WeatherRepository(application: Application) {
         override fun doInBackground(vararg weatherModels: WeatherModel): Void? {
             aSyncweatherDao.deleteAll()
             aSyncweatherDao.insert(weatherModels[0])
-            Log.d("insertok","ok")
+            Log.d("insertok", "ok")
             return null
 
         }
@@ -44,15 +44,11 @@ class WeatherRepository(application: Application) {
 
 
     private class getdataAsynctask(internal var aSyncweatherDao: WeatherDao) : AsyncTask<Void, Void, WeatherModel>() {
-
-
         override fun doInBackground(vararg voids: Void): WeatherModel? {
             aSyncweatherDao.getdata()
 
             return null
         }
-
-
 
 
     }

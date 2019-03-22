@@ -15,21 +15,21 @@ abstract class WeatherDatabase : RoomDatabase() {
      * Populate the database in the background.
      * If you want to start with more words, just add them.
      */
-    private class PopulateDbAsync internal constructor(db: WeatherDatabase) : AsyncTask<Void, Void, Void>() {
-
-        private val mDao: WeatherDao
-
-        init {
-            mDao = db.weatherDao()
-        }
-
-        override fun doInBackground(vararg params: Void): Void? {
-            // Start the app with a clean database every time.
-            // Not needed if you only populate on creation.
-            //            mDao.deleteAll();
-            return null
-        }
-    }
+//    private class PopulateDbAsync internal constructor(db: WeatherDatabase) : AsyncTask<Void, Void, Void>() {
+//
+//        private val mDao: WeatherDao
+//
+//        init {
+//            mDao = db.weatherDao()
+//        }
+//
+//        override fun doInBackground(vararg params: Void): Void? {
+//            // Start the app with a clean database every time.
+//            // Not needed if you only populate on creation.
+//            //            mDao.deleteAll();
+//            return null
+//        }
+//    }
 
     companion object {
         @Volatile
@@ -44,7 +44,7 @@ abstract class WeatherDatabase : RoomDatabase() {
                             WeatherDatabase::class.java, "weather_database"
                         )
                             .fallbackToDestructiveMigration()
-                            .addCallback(sRoomDatabaseCallback)
+//                            .addCallback(sRoomDatabaseCallback)
                             .build()
                     }
                 }
@@ -52,15 +52,15 @@ abstract class WeatherDatabase : RoomDatabase() {
             return INSTANCE
         }
 
-
-        private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
-
-            override fun onOpen(db: SupportSQLiteDatabase) {
-                super.onOpen(db)
-                // If you want to keep the data through app restarts,
-                // comment out the following line.
-                PopulateDbAsync(INSTANCE!!).execute()
-            }
-        }
+//
+//        private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
+//
+//            override fun onOpen(db: SupportSQLiteDatabase) {
+//                super.onOpen(db)
+//                // If you want to keep the data through app restarts,
+//                // comment out the following line.
+//                PopulateDbAsync(INSTANCE!!).execute()
+//            }
+//        }
     }
 }
