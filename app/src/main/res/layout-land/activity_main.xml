@@ -146,5 +146,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imgWinsp"
                 app:layout_constraintTop_toBottomOf="@+id/windr"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

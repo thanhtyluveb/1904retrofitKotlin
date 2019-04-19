@@ -12,9 +12,9 @@ object RetrofitClient {
 
     fun getClient(baseUrl: String): Retrofit? {
         val buider = OkHttpClient.Builder()
-//                .readTimeout(5000, TimeUnit.MILLISECONDS)
-//                .writeTimeout(5000, TimeUnit.MILLISECONDS)
-//                .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                .readTimeout(5000, TimeUnit.MILLISECONDS)
+                .writeTimeout(5000, TimeUnit.MILLISECONDS)
+                .connectTimeout(10000, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true)
                 .build()
         if (retrofit == null) {

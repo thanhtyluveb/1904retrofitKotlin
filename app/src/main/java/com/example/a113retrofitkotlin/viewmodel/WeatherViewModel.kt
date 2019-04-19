@@ -14,7 +14,6 @@ import com.example.recyclerview.remote.retrofit.WeatherService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.logging.Handler
 
 open class WeatherViewModel(application: Application) : AndroidViewModel(application) {
     var livedataweather: MutableLiveData<WeatherModel> = MutableLiveData()
@@ -31,6 +30,7 @@ open class WeatherViewModel(application: Application) : AndroidViewModel(applica
 //    }
     init {
         reposity = WeatherRepository(application)
+        livedataweather.value = WeatherModel("", 0.0, 0, 0, 0, 0.0, 0)
         dataweather = reposity.data
         weatherService = ApiUtils.soService
         loaddata()
@@ -41,18 +41,19 @@ open class WeatherViewModel(application: Application) : AndroidViewModel(applica
         weatherService!!.weatherCall().enqueue(object : Callback<WeatherDigital> {
             override fun onResponse(call: Call<WeatherDigital>, response: Response<WeatherDigital>) {
                 if (response.isSuccessful) {
-                    var apiresults: WeatherDigital = response.body()!!
-                    var weathermodelresult = WeatherModel(
+                    val apiresults: WeatherDigital = response.body()!!
+                    val weathermodelresult = WeatherModel(
                         apiresults.name!!,
                         Math.round(apiresults.main!!.temp!! - 275.0).toDouble(),
                         apiresults.main!!.pressure!!,
                         apiresults.main!!.humidity!!,
                         apiresults.clouds!!.all!!,
                         apiresults.wind!!.speed!!,
-                        apiresults.wind!!.deg!!
+                        0
                     )
 
                     livedataweather.value = weathermodelresult
+
                     reposity.insert(weathermodelresult)
                     Toast.makeText(getApplication(), "online mode", Toast.LENGTH_LONG).show()
 
@@ -64,12 +65,9 @@ open class WeatherViewModel(application: Application) : AndroidViewModel(applica
                     Observer {
                         livedataweather.value = dataweather.value
                         Toast.makeText(getApplication(), "offline mode", Toast.LENGTH_LONG).show()
-//                        dataweather.removeObserver { livedataweather }
+                        dataweather.removeObserver { livedataweather }
 
                     })
-
-
-
             }
 
         })

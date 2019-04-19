@@ -14,7 +14,7 @@ class WeatherRepository(application: Application) {
 
     val data: LiveData<WeatherModel>
         get() {
-            getdataAsynctask(weatherDao).execute()
+            getdataAsynctask().execute()
             return weatherModel
         }
 
@@ -43,15 +43,18 @@ class WeatherRepository(application: Application) {
     }
 
 
-    private class getdataAsynctask(internal var aSyncweatherDao: WeatherDao) : AsyncTask<Void, Void, WeatherModel>() {
-        override fun doInBackground(vararg voids: Void): WeatherModel? {
-            aSyncweatherDao.getdata()
+    inner class getdataAsynctask() : AsyncTask<Void, Void, LiveData<WeatherModel>>() {
+        override fun doInBackground(vararg voids: Void): LiveData<WeatherModel> {
+            return weatherDao.getdata()
 
-            return null
         }
 
+        override fun onPostExecute(result: LiveData<WeatherModel>?) {
+            super.onPostExecute(result)
+        }
 
     }
-
-
 }
+
+
+
