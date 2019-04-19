@@ -148,6 +148,7 @@
                 app:layout_constraintStart_toEndOf="@id/imgWinsp"
                 app:layout_constraintTop_toBottomOf="@+id/windr"/>
         <Button
+                android:onClick="@{()->viewmodel.loaddata()}"
                 android:text="Refresh"
                 android:textStyle="italic"
                 android:background="#05FCFBFB"

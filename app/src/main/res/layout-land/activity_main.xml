@@ -146,6 +146,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imgWinsp"
                 app:layout_constraintTop_toBottomOf="@+id/windr"/>
+        <Button
+                android:onClick="@{()->viewmodel.loaddata()}"
+                android:text="Refresh"
+                android:textStyle="italic"
+                android:background="#05FCFBFB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnrefresh"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
