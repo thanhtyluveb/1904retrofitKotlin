@@ -12,7 +12,6 @@ import com.example.a113retrofitkotlin.viewmodel.WeatherViewModel
 class MainActivity : AppCompatActivity(), LifecycleObserver {
     lateinit var weatherViewModel: WeatherViewModel
 
-    var receiver: NetworkChangeReceiver = NetworkChangeReceiver()
 
     lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
