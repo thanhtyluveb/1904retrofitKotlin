@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProviders
-import com.example.a113retrofitkotlin.NetworkChangeReceiver
 import com.example.a113retrofitkotlin.R
 import com.example.a113retrofitkotlin.databinding.ActivityMainBinding
 import com.example.a113retrofitkotlin.viewmodel.WeatherViewModel
